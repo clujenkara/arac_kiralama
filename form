@@ -1,0 +1,77 @@
+using System;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+1 reference
+public partial class CarRentalForm: Form
+{
+// Veritabanı bağlantı string'i (bu bilgiyi kendi veritabanınızın bilgileri ile güncelleyin)
+1 reference
+private string connectionString = "Server=myServerAddress; Database=myDataBase; User Id=myUsername; Password=myPassword;";
+O references
+public CarRentalForm()
+{
+InitializeComponent();
+InitializeFormControls();
+}
+1 reference
+private void InitializeFormControls()
+{
+// Label, TextBox ve DateTimePicker kontrollerini oluşturma ve konumlandırma // Kod özeti ve sadeliği için burada sadece bazı kontroller gösterilmiştir.
+Label nameLabel = new Label { Text = "Müşteri Ad:" };
+TextBox nameTextBox = new TextBox { Name = "nameTextBox" };
+Label emailLabel = new Label (Text = "Email:" };
+TextBox emailTextBox = new TextBox { Name = "emailTextBox" };
+Label phoneLabel = new Label (Text = "Telefon:" };
+TextBox phoneTextBox = new TextBox { Name = "phoneTextBox" };
+Label rentalDateLabel = new Label { Text = "Kiralama Tarihi:" };
+DateTimePicker rentalDateTimePicker = new DateTimePicker { Name = "rentalDateTimePicker" };
+Label returnDateLabel = new Label { Text = "İade Tarihi:" };
+DateTimePicker returnDateTimePicker = new DateTimePicker { Name = "returnDateTimePicker" };
+Label carModelLabel = new Label { Text = "Araç Modeli:" };
+TextBox carModelTextBox = new TextBox { Name = "carModelTextBox" };
+Label priceLabel = new Label { Text = "Fiyat (も):" };
+TextBox priceTextBox = new TextBox { Name = "priceTextBox" };
+Button submitButton = new Button { Text = "Kiralama İşlemini Kaydet" };
+submitButton.Click += new EventHandler(SubmitButton_Click);
+// Kontrolleri form üzerine ekleme
+this.Controls.AddRange(new Control[] { nameLabel, nameTextBox, emailLabel, emailTextBox, pho
+// Kontrollerin yerleşimini ayarlama
+// Bu kod parçası, her kontrol için yapılacak yerleşim ayarlarını temsil etmektedir.
+// Kontrollerin düzgün bir biçimde yerleştirilmesi için bu bölümün detaylandırılması gerekec
+}
+1 reference
+private void SubmitButton_Click(object sender, EventArgs e)
+{
+// Kullanıcı girislerini al
+string customerName = this.Controls["nameTextBox"].Text;
+string email this.Controls["emailTextBox"].Text;
+string phone this.Controls["phoneTextBox"].Text;
+DateTime rentalDate= ((DateTimePicker)this.Controls["rentalDateTimePicker"]).Value;
+DateTime returnDate ((DateTimePicker) this.Controls ["returnDateTimePicker"]).Value;
+string carModel this.Controls["carModelTextBox"].Text;
+decimal price Convert.ToDecimal(this.Controls ["priceTextBox"].Text);
+// Veritabanına kayıt ekleme
+using (SqlConnection connection new SqlConnection(connectionString))
+{
+// SQL komutunu hazırlama
+string sql = "INSERT INTO CarRentals (CustomerName, Email, Phone, RentalDate, ReturnDate
+// SqlCommand nesnesini ve parametreleri olusturma
+using (SqlCommand command= new SqlCommand(sql, connection))
+{
+command.Parameters.AddWithValue("@CustomerName", customerName); command.Parameters.AddWithValue("@Email", email); command.Parameters.AddWithValue("@Phone", phone); command.Parameters.AddWithValue("@RentalDate", rentalDate); command.Parameters.AddWithValue("@ReturnDate", returnDate); command.Parameters.AddWithValue("@CarModel", carModel);
+command.Parameters.AddWithValue("@Price", price);
+// Veritabanı bağlantısını açma ve SQL komutunu çalıştırma
+connection.Open();
+int result command.ExecuteNonQuery();
+// Başarı durumunu kontrol etme ve kullanıcıya bilgi verme
+if (result > 0)
+MessageBox.Show("Araç kiralama işlemi başarEyla kaydedildi.");
+}
+else
+MessageBox.Show("Araç kiralama işlemi kaydedilirken bir hata oluştu.");
+// Veritabanı bağlantısını kapatma
+connection.Close();
+}
+}
+}
+}
