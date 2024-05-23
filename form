@@ -1,19 +1,19 @@
 using System;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-1 reference
+
 public partial class CarRentalForm: Form
 {
 // Veritabanı bağlantı string'i (bu bilgiyi kendi veritabanınızın bilgileri ile güncelleyin)
-1 reference
+
 private string connectionString = "Server=myServerAddress; Database=myDataBase; User Id=myUsername; Password=myPassword;";
-O references
+
 public CarRentalForm()
 {
 InitializeComponent();
 InitializeFormControls();
 }
-1 reference
+
 private void InitializeFormControls()
 {
 // Label, TextBox ve DateTimePicker kontrollerini oluşturma ve konumlandırma // Kod özeti ve sadeliği için burada sadece bazı kontroller gösterilmiştir.
@@ -39,7 +39,7 @@ this.Controls.AddRange(new Control[] { nameLabel, nameTextBox, emailLabel, email
 // Bu kod parçası, her kontrol için yapılacak yerleşim ayarlarını temsil etmektedir.
 // Kontrollerin düzgün bir biçimde yerleştirilmesi için bu bölümün detaylandırılması gerekec
 }
-1 reference
+
 private void SubmitButton_Click(object sender, EventArgs e)
 {
 // Kullanıcı girislerini al
